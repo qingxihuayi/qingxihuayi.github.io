@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="user-scalable=no, viewport-fit=cover"/>
+<title>华一必胜！</title>
+<!--<link rel="shortcut icon" href="/favicon.ico"/>
+<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.jpg"/>-->
+<style>
+body {
+	font-family: Verdana, "Helvetica Neue", Arial, "PingFang SC", "Microsoft JhengHei", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
+	color: #FFF;
+	text-align: center;
+	font-size: large;
+	background-attachment: fixed;
+	background-image: url("/images/huayi.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	/*filter: blur(1.5px);*/
+}
+input, button {
+	/*font-size: 30px;*/
+	font-size: large;
+}
+.panel {
+	padding: 15px;
+	margin: 15px;
+	border-radius: 10px;
+	background-color: rgba(10,10,30,0.3);
+}
+canvas, img {
+	width: 640px;
+	height: 640px;
+	border-radius: 20px;
+}
+#main {
+	display: none;
+	overflow-x: scroll;
+}
+a {
+	text-decoration: none;
+	color: #EFB24B;
+}
+</style>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<div class="panel">
+	<h1>华师一, 向梦想出发!</h1>
+	<p>
+		<strong>从汤逊湖北路特一号走向世界</strong>
+	</p>
+	<p>
+	请点击“选取文件”选择本地图片，然后点击“生成”合成头像
+	<br/>
+	如果觉得满意，请右键点击或长按图片手动保存即可
+	</p>
+	<input id="imageUpload" type="file" accept="image/png,image/gif,image/jpeg,image/bmp"/>
+	<input id="upimage" type="button" onclick="uploadImage()" value="生成">
+	<!--<input id="downimage" type="button" onclick="downloadImage()" value="下载">-->
+</div>
+<div class="panel" id="main">
+	<canvas></canvas>
+</div>
+<div class="panel">
+	本项目采用GPL3.0协议发布<!-- <a href="https://zhangshuqiao.org">米米</a> 做了一点微小的工作-->
+	<br/>
+	为保障您的用户体验，建议您使用Chrome浏览
+	<br/>
+	并上传宽高比为1:1且高亮部分较少的图片作为头像
+	<br/>
+	图片均在本地进行生成，我们不会获取任何信息
+</div>
+<script>
+/*
+ * Created by Shuqiao Zhang in 2018.
+ * https://zhangshuqiao.org
+ */
+
+/* 
+ * This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ */
+
+var canvas = $("canvas")[0],
+	context = canvas.getContext("2d"),
+	cover = new Image(),
+	firstTime = true;
+canvas.width = 640;
+canvas.height = 640;
+cover.src = "/images/640.png";
+function uploadImage() {
+	if (!$("#imageUpload").prop("files")[0]) {
+		alert("请先选择图片，再点击生成！");
+		return;
+	}
+	var src = window.URL.createObjectURL($("#imageUpload").prop("files")[0]),
+		img = new Image();
+	img.src = src;
+	img.onload = function() {
+		$("img").remove();
+		$("canvas").show();
+		var r = img.width > img.height ? img.height : img.width;
+		context.drawImage(img, 0, 0, r, r, 0, 0, 640, 640);
+		context.drawImage(cover, 0, 0, 640, 640);
+		var image = canvas.toDataURL("image/png");
+		$("#main").prepend(`<img src="${image}"/>`);
+		$("canvas").hide();
+		if (firstTime) {
+			$("#main").slideDown();
+			firstTime = false;
+		}
+	}
+}
+</script>
+</body>
+</html>
