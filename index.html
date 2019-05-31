@@ -29,12 +29,28 @@ input, button {
 	border-radius: 10px;
 	background-color: rgba(10,10,30,0.3);
 }
-canvas, img {
-	border-radius: 20px;
+#colorbar {
+	overflow-x: scroll;
+}
+.color {
+	float: left;
+	width: 6em;
+	height: 6em;
+	margin: 20px;
+	cursor: pointer;
+	border-radius: 1em;
+	text-align: center;
+	transition: all 1s;
+}
+.color.active {
+	transform: rotate(135deg);
 }
 #main {
 	display: none;
 	overflow-x: scroll;
+}
+canvas, img {
+	border-radius: 20px;
 }
 a {
 	text-decoration: none;
@@ -58,6 +74,8 @@ a {
 	<input id="upimage" type="button" onclick="uploadImage()" value="生成">
 	<!--<input id="downimage" type="button" onclick="downloadImage()" value="下载">-->
 </div>
+<div class="panel" id="colorbar">
+</div>
 <div class="panel" id="main">
 	<canvas></canvas>
 </div>
@@ -71,7 +89,6 @@ a {
 	图片均在本地进行生成，我们不会获取任何信息
 </div>
 <div style="display: none;">
-	<img id="cover"/>
 	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 618.4 618.4">
 		<defs>
 			<style>.cls-1{fill:#ffffff;}</style>
@@ -109,13 +126,21 @@ var canvas = $("canvas")[0],
 	context = canvas.getContext("2d"),
 	firstTime = true,
 	img = new Image();
-img.onload = generate;
+
+const colors = ["white", "saddlebrown", "red", "orange", "yellow", "green", "blue", "purple", "grey", "lavender", "gold", "silver"];
+for (i in colors) {
+	$("#colorbar").append(`<div class="color" style="background-color: ${colors[i]};" onclick="pickColor(${i});">
+	</div>`);
+}
+pickColor(0);
+
 function uploadImage() {
 	if (!$("#imageUpload").prop("files")[0]) {
 		alert("请先选择图片，再点击生成！");
 		return;
 	}
 	img.src = window.URL.createObjectURL($("#imageUpload").prop("files")[0]);
+	img.onload = generate;
 }
 function generate() {
 	$("#result").remove();
@@ -128,7 +153,7 @@ function generate() {
 //https://stackoverflow.com/questions/3768565/drawing-an-svg-file-on-a-html5-canvas
 function drawCover(length) {
 	var svg = $("svg")[0],
-		cover = $("#cover")[0];
+		cover = new Image();
 	// get svg data
 	var xml = new XMLSerializer().serializeToString(svg);
 	// make it base64
@@ -153,8 +178,10 @@ function saveCanvas() {
 		firstTime = false;
 	}
 }
-function pickColor() {
-	;
+function pickColor(index) {
+	$(".color").removeClass("active").eq(index).addClass("active");
+	$("svg").find("style").html(`<style>.cls-1{fill:${colors[index]};}</style>`);
+	if (img.src) generate();
 }
 </script>
 </body>
