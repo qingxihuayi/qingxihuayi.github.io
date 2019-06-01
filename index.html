@@ -30,10 +30,17 @@ input, button {
 	background-color: rgba(10,10,30,0.3);
 }
 #colorbar {
-	overflow-x: scroll;
+	display: flex;
+	flex-wrap: nowrap;
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+	justify-content: space-between;
+}
+#colorbar::-webkit-scrollbar {
+	display: none;
 }
 .color {
-	float: left;
+	flex: 0 0 auto;
 	width: 6em;
 	height: 6em;
 	margin: 20px;
@@ -43,7 +50,7 @@ input, button {
 	transition: all 1s;
 }
 .color.active {
-	transform: rotate(135deg);
+	transform: rotate(135deg) scale(0.7);
 }
 #main {
 	display: none;
@@ -74,7 +81,8 @@ a {
 	<input id="upimage" type="button" onclick="uploadImage()" value="生成">
 	<!--<input id="downimage" type="button" onclick="downloadImage()" value="下载">-->
 </div>
-<div class="panel" id="colorbar">
+<div class="panel">
+	<div id="colorbar"></div>
 </div>
 <div class="panel" id="main">
 	<canvas></canvas>
