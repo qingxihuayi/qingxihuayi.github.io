@@ -27,14 +27,14 @@ body {
 	background-position: center;
 	filter: blur(1.5px);
 }
-input, button {
-	font-size: large;
-}
 .panel {
 	padding: 15px;
 	margin: 15px;
 	border-radius: 10px;
 	background-color: rgba(10,10,30,0.3);
+}
+input {
+	font-size: large;
 }
 #colorbar {
 	display: flex;
@@ -140,7 +140,8 @@ a {
 var canvas = $("canvas")[0],
 	context = canvas.getContext("2d"),
 	firstTime = true,
-	img = new Image();
+	img = new Image(),
+	cover = new Image();
 
 const colors = ["white", "saddlebrown", "red", "orange", "yellow", "green", "blue", "purple", "grey", "lavender", "gold", "silver"];
 for (i in colors) {
@@ -167,8 +168,7 @@ function generate() {
 }
 //https://stackoverflow.com/questions/3768565/drawing-an-svg-file-on-a-html5-canvas
 function drawCover(length) {
-	var svg = $("svg")[0],
-		cover = new Image();
+	var svg = $("svg")[0];
 	// get svg data
 	var xml = new XMLSerializer().serializeToString(svg);
 	// make it base64
