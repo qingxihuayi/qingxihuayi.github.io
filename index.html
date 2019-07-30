@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="user-scalable=no, viewport-fit=cover"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="user-scalable=no, viewport-fit=cover">
 <title>华一必胜！</title>
-<!--<link rel="shortcut icon" href="/favicon.ico"/>
-<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.jpg"/>-->
+<!--<link rel="shortcut icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.jpg">-->
 <style>
 body {
 	font-family: Verdana, "Helvetica Neue", Arial, "PingFang SC", "Microsoft JhengHei", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
@@ -82,11 +82,11 @@ a {
 	</p>
 	<p>
 	请点击“选取文件”选择本地图片，然后点击“生成”合成头像
-	<br/>
+	<br>
 	如果觉得满意，请右键点击或长按图片手动保存即可
 	</p>
-	<input id="imageUpload" type="file" accept="image/png,image/gif,image/jpeg,image/bmp"/>
-	<input id="upimage" type="button" onclick="uploadImage()" value="生成"/>
+	<input id="imageUpload" type="file" accept="image/png,image/gif,image/jpeg,image/bmp">
+	<input id="upimage" type="button" onclick="uploadImage()" value="生成">
 </div>
 <div class="panel">
 	<div id="colorbar"></div>
@@ -96,11 +96,11 @@ a {
 </div>
 <div class="panel">
 	本项目采用GPL3.0协议发布<!-- <a href="https://zhangshuqiao.org">米米</a> 做了一点微小的工作-->
-	<br/>
+	<br>
 	为保障您的用户体验，建议您使用Chrome浏览
-	<br/>
+	<br>
 	并上传宽高比为1:1且高亮部分较少的图片作为头像
-	<br/>
+	<br>
 	图片均在本地进行生成，我们不会获取任何信息
 </div>
 <div style="display: none;">
@@ -186,7 +186,7 @@ function drawCover(length) {
 }
 function saveCanvas() {
 	var image = canvas.toDataURL("image/png");
-	$("#main").prepend(`<img id="result" src="${image}"/>`);
+	$("#main").prepend(`<img id="result" src="${image}">`);
 	$("canvas").hide();
 	if (firstTime) {
 		$("#main").slideDown();
