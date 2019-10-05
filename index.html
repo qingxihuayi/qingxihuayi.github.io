@@ -8,53 +8,53 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.jpg">-->
 <style>
 body {
-	font-family: Verdana, "Helvetica Neue", Arial, "PingFang SC", "Microsoft JhengHei", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
 	color: #FFF;
-	text-align: center;
+	font-family: Verdana, "Helvetica Neue", Arial, "PingFang SC", "Microsoft JhengHei", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
 	font-size: large;
+	text-align: center;
 }
 .bg {
-	position: fixed;
-	left: 0px;
-	top: 0px;
-	width: 100%;
-	height: 100%;
-	z-index: -1;
 	background-attachment: fixed;
 	background-image: url("/images/huayi.jpg");
+	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
-	background-position: center;
 	filter: blur(1.5px);
+	height: 100%;
+	left: 0px;
+	position: fixed;
+	top: 0px;
+	width: 100%;
+	z-index: -1;
 }
 .panel {
-	padding: 15px;
-	margin: 15px;
-	border-radius: 10px;
 	background-color: rgba(10,10,30,0.3);
+	margin: 15px;
+	padding: 15px;
+	border-radius: 10px;
 }
 input {
 	font-size: large;
 }
 #colorbar {
+	-webkit-overflow-scrolling: touch;
 	display: flex;
 	flex-wrap: nowrap;
-	overflow-x: auto;
-	-webkit-overflow-scrolling: touch;
 	justify-content: space-between;
+	overflow-x: auto;
 }
 #colorbar::-webkit-scrollbar {
 	display: none;
 }
 .color {
+	border-radius: 1em;
+	cursor: pointer;
 	flex: 0 0 auto;
-	width: 6em;
 	height: 6em;
 	margin: 20px;
-	cursor: pointer;
-	border-radius: 1em;
 	text-align: center;
 	transition: all 1s;
+	width: 6em;
 }
 .color.active {
 	transform: rotate(135deg) scale(0.7);
@@ -67,8 +67,8 @@ canvas, img {
 	border-radius: 20px;
 }
 a {
-	text-decoration: none;
 	color: #EFB24B;
+	text-decoration: none;
 }
 </style>
 </head>
@@ -125,7 +125,7 @@ a {
  * https://zhangshuqiao.org
  */
 
-/* 
+/*
  * This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
