@@ -81,7 +81,7 @@ a {
 		<strong>从汤逊湖北路特一号走向世界</strong>
 	</p>
 	<p>
-	请点击“选取文件”选择本地图片，然后点击“生成”合成头像
+	请点击「选取文件」选择本地图片，然后点击「生成」合成头像
 	<br>
 	如果觉得满意，请右键点击或长按图片手动保存即可
 	</p>
@@ -137,25 +137,26 @@ a {
  *  GNU General Public License for more details.
  */
 
-var canvas = $("canvas")[0],
+var canvas = document.querySelector("canvas"),
 	context = canvas.getContext("2d"),
 	firstTime = true,
 	img = new Image(),
 	cover = new Image();
 
 const colors = ["white", "saddlebrown", "red", "orange", "yellow", "green", "blue", "purple", "grey", "lavender", "gold", "silver"];
-for (i in colors) {
-	$("#colorbar").append(`<div class="color" style="background-color: ${colors[i]};" onclick="pickColor(${i});">
+colors.forEach((color, i) => {
+	document.getElementById("colorbar").insertAdjacentHTML("beforeend", `<div class="color" style="background-color: ${color};" onclick="pickColor(${i});">
 	</div>`);
-}
+});
 pickColor(0);
 
 function uploadImage() {
-	if (!$("#imageUpload").prop("files")[0]) {
+	var file = document.getElementById("imageUpload").files[0];
+	if (!file) {
 		alert("请先选择图片，再点击生成！");
 		return;
 	}
-	img.src = window.URL.createObjectURL($("#imageUpload").prop("files")[0]);
+	img.src = window.URL.createObjectURL(file);
 	img.onload = generate;
 }
 function generate() {
@@ -168,7 +169,7 @@ function generate() {
 }
 //https://stackoverflow.com/questions/3768565/drawing-an-svg-file-on-a-html5-canvas
 function drawCover(length) {
-	var svg = $("svg")[0];
+	var svg = document.querySelector("svg");
 	// get svg data
 	var xml = new XMLSerializer().serializeToString(svg);
 	// make it base64
