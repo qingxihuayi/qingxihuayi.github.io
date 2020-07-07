@@ -76,13 +76,20 @@ a {
 				<button class="btn btn-primary" type="button" id="upimage" onclick="uploadImage()">生成</button>
 			</div>
 		</div>
-		<div class="input-group col-md-6 mt-3">
+		<div class="input-group col-md-4 mt-3">
 			<div class="input-group-prepend">
 				<span class="input-group-text">选择颜色</span>
 			</div>
 			<input type="color" class="form-control" id="color" value="#8B0012" oninput="pickColor()">
 		</div>
-		<div class="input-group col-md-6 mt-3">
+		<div class="input-group col-md-4 mt-3">
+			<div class="input-group-prepend">
+				<label class="input-group-text" for="cover">透明度</label>
+			</div>
+			<input type="text" class="form-control" id="opacity" value="1" oninput="pickColor()">
+			</select>
+		</div>
+		<div class="input-group col-md-4 mt-3">
 			<div class="input-group-prepend">
 				<label class="input-group-text" for="cover">选择年份</label>
 			</div>
@@ -133,6 +140,9 @@ const covers = [{
 }, {
 	name: 2020,
 	src: "images/2020.svg"
+}, {
+	name: 2077,
+	src: "images/2077.svg"
 }];
 
 covers.forEach(cover => {
@@ -165,8 +175,16 @@ function generate() {
 	drawCover(length);
 }
 
+function getSize(image, size) {
+	let { width, height } = image;
+	const std = Math.max(width, height);
+	const w = width / std;
+	const h = height / std;
+	return [2 + 48 * (1 - w), 2 + 48 * (1 - h), 96 * w, 96 * h].map(item => item * size / 100);
+}
+
 // https://stackoverflow.com/questions/3768565/drawing-an-svg-file-on-a-html5-canvas
-function drawCover(length) {
+function drawCover(size) {
 	let name = document.getElementById("cover").value;
 	let svg = document.querySelector(`.image-${name}`).contentDocument.querySelector("svg");
 	if (!svg) return;
@@ -181,7 +199,15 @@ function drawCover(length) {
 	cover.src = image64;
 	// draw the image onto the canvas
 	cover.onload = function() {
-		context.drawImage(cover, length * 0.02, length * 0.02, length * 0.96, length * 0.96);
+		let opacity = document.getElementById("opacity").value;
+		opacity = parseFloat(opacity);
+		if (!(opacity >= 0 && opacity <= 1)) {
+			opacity = 1;
+		}
+		const coordinate = getSize(cover, size);
+		context.globalAlpha = opacity;
+		context.drawImage(cover, ...coordinate);
+		context.globalAlpha = 1;
 		saveCanvas();
 	};
 }
