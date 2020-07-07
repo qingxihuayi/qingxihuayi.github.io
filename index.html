@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, viewport-fit=cover">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css">
 <title>华一必胜！</title>
 <!--<link rel="shortcut icon" href="/favicon.ico">
@@ -33,15 +33,14 @@ body {
 	padding: 15px;
 	border-radius: 10px;
 }
-input {
-	font-size: large;
-}
-#main {
+.main {
 	display: none;
+	margin: 15px;
 	overflow-x: scroll;
 }
 canvas, img {
-	border-radius: 20px;
+	border-radius: 10px;
+	width: 100%;
 }
 a {
 	color: #EFB24B;
@@ -67,27 +66,40 @@ a {
 	<br>
 	如果觉得满意，请右键点击或长按图片手动保存即可
 	</p>
-	<div class="input-group">
-		<div class="custom-file">
-			<input type="file" class="custom-file-input" id="imageUpload" accept="image/png,image/gif,image/jpeg,image/bmp">
-			<label class="custom-file-label" for="imageUpload">点击上传图片</label>
+	<div class="row">
+		<div class="input-group col-md-12">
+			<div class="custom-file">
+				<input type="file" class="custom-file-input" id="imageUpload" accept="image/png,image/gif,image/jpeg,image/bmp">
+				<label class="custom-file-label" for="imageUpload">点击上传图片</label>
+			</div>
+			<div class="input-group-append">
+				<button class="btn btn-primary" type="button" id="upimage" onclick="uploadImage()">生成</button>
+			</div>
 		</div>
-		<div class="input-group-append">
-			<button class="btn btn-outline-secondary" type="button" id="upimage" onclick="uploadImage()">生成</button>
+		<div class="input-group col-md-6 mt-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text">选择颜色</span>
+			</div>
+			<input type="color" class="form-control" id="color" value="#8B0012" oninput="pickColor()">
+		</div>
+		<div class="input-group col-md-6 mt-3">
+			<div class="input-group-prepend">
+				<label class="input-group-text" for="cover">选择年份</label>
+			</div>
+			<select class="custom-select" id="cover" oninput="pickColor()">
+			</select>
 		</div>
 	</div>
-	<div>选择颜色<input type="color" id="color" value="#ffffff" oninput="pickColor()"></div>
-	<div>选择年份<select id="cover" oninput="pickColor()"></select></div>
 </div>
-<div class="panel" id="main">
+<main class="main">
 	<canvas></canvas>
-</div>
+</main>
 <div class="panel">
 	本项目采用 GPL3.0 协议发布<!-- <a href="https://zhangshuqiao.org">米米</a> 做了一点微小的工作-->
 	<br>
 	为保障您的用户体验，建议您使用 Chrome 浏览
 	<br>
-	并上传宽高比为 1:1 且高亮部分较少的图片作为头像
+	并上传宽高比为 1:1 的图片作为头像
 	<br>
 	图片均在本地进行生成，我们不会获取任何信息
 </div>
@@ -176,10 +188,10 @@ function drawCover(length) {
 
 function saveCanvas() {
 	const image = canvas.toDataURL("image/png");
-	$("#main").prepend(`<img class="result" src="${image}">`);
+	$(".main").prepend(`<img class="result" src="${image}">`);
 	$("canvas").hide();
 	if (firstTime) {
-		$("#main").slideDown();
+		$(".main").slideDown();
 		firstTime = false;
 	}
 }
