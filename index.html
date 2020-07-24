@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, viewport-fit=cover">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css">
 <title>华一必胜！</title>
 <!--<link rel="shortcut icon" href="/favicon.ico">
 <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.jpg">-->
@@ -54,7 +54,7 @@ a {
 </style>
 </head>
 <body>
-<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
 <div class="bg"></div>
 <div class="panel">
 	<h1>华师一, 向梦想出发!</h1>
@@ -146,7 +146,7 @@ const covers = [{
 }];
 
 covers.forEach(cover => {
-	let image = document.createElement("object");
+	const image = document.createElement("object");
 	image.className = `image-${cover.name}`;
 	image.data = cover.src;
 	image.type = "image/svg+xml";
@@ -176,7 +176,7 @@ function generate() {
 }
 
 function getSize(image, size) {
-	let { width, height } = image;
+	const { width, height } = image;
 	const std = Math.max(width, height);
 	const w = width / std;
 	const h = height / std;
@@ -185,18 +185,15 @@ function getSize(image, size) {
 
 // https://stackoverflow.com/questions/3768565/drawing-an-svg-file-on-a-html5-canvas
 function drawCover(size) {
-	let name = document.getElementById("cover").value;
-	let svg = document.querySelector(`.image-${name}`).contentDocument.querySelector("svg");
+	const name = document.getElementById("cover").value;
+	const svg = document.querySelector(`.image-${name}`).contentDocument.querySelector("svg");
 	if (!svg) return;
 	// get svg data
-	let xml = new XMLSerializer().serializeToString(svg);
-	// make it base64
-	let svg64 = btoa(xml);
-	// prepend a "header"
-	let image64 = "data:image/svg+xml;base64," + svg64;
+	const xml = new XMLSerializer().serializeToString(svg);
 	// set it as the source of the img element
-	let cover = new Image();
-	cover.src = image64;
+	const cover = new Image();
+	// make it base64
+	cover.src = "data:image/svg+xml;base64," + btoa(xml);
 	// draw the image onto the canvas
 	cover.onload = function() {
 		let opacity = document.getElementById("opacity").value;
